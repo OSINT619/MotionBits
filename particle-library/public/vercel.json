@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/animations/:particle-1/",
-      "destination": "/animations/:particle-1/index.html"
-    }
-  ]
-}
