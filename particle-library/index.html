@@ -1,418 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MotionBits Particle Library</title>
-<style>
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f0f3;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    user-select: none;
-  }
-
-  header {
-    padding: 1.5rem 2rem;
-    font-weight: 900;
-    font-size: 2.5rem;
-    color: #222;
-    text-align: center;
-    user-select: text;
-    /* Deep embossed */
-    text-shadow:
-      2px 2px 0 #a8a8a8,
-      4px 4px 6px #d6d6d6,
-      -1px -1px 1px #fff,
-      -4px -4px 8px #f8f8f8;
-    background: #f0f0f3;
-    box-shadow:
-      inset 5px 5px 10px #bebebe,
-      inset -5px -5px 10px #ffffff;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    padding: 2rem;
-    gap: 2rem;
-  }
-
-  /* Sidebar nav */
-  nav {
-    flex: 0 0 280px;
-    background: #f0f0f3;
-    border-radius: 24px;
-    box-shadow:
-      8px 8px 16px #bebebe,
-      -8px -8px 16px #ffffff;
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    user-select: none;
-  }
-  nav label {
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #555;
-    user-select: text;
-  }
-  nav select {
-    border-radius: 12px;
-    border: none;
-    padding: 0.8rem 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    box-shadow:
-      5px 5px 10px #bebebe,
-      -5px -5px 10px #ffffff;
-    background: #f0f0f3;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    user-select: none;
-  }
-  nav select:focus {
-    outline: none;
-    box-shadow:
-      inset 3px 3px 6px #bebebe,
-      inset -3px -3px 6px #ffffff;
-  }
-
-  /* Instructions */
-  .instructions {
-    margin-top: 2rem;
-    flex-grow: 1;
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #444;
-    /* Beveled text */
-    text-shadow:
-      1px 1px 0 #fff,
-      2px 2px 4px #bbb;
-    user-select: text;
-    overflow-y: auto;
-  }
-  .instructions strong {
-    color: #222;
-    font-weight: 700;
-    text-shadow:
-      1px 1px 0 #fff,
-      2px 2px 3px #aaa;
-  }
-  .instructions pre {
-    background: #e0e0e3;
-    padding: 1rem;
-    border-radius: 16px;
-    box-shadow:
-      inset 3px 3px 6px #bebebe,
-      inset -3px -3px 6px #ffffff;
-    overflow-x: auto;
-    font-family: 'Source Code Pro', monospace, monospace;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    white-space: pre-wrap;
-  }
-
-  /* Animation display */
-  .animation-area {
-    flex: 1;
-    background: #f0f0f3;
-    border-radius: 32px;
-    box-shadow:
-      12px 12px 24px #bebebe,
-      -12px -12px 24px #ffffff;
-    position: relative;
-    overflow: hidden;
-  }
-  canvas#c {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 32px;
-    box-shadow:
-      inset 4px 4px 10px #c1c1c1,
-      inset -4px -4px 10px #ffffff;
-    background-color: black;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    main {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MotionBits</title>
+  <style>
+    /* Reset & base */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f0f3;
+      color: #333;
+      display: flex;
       flex-direction: column;
-      padding: 1rem;
+      align-items: center;
+      padding: 3rem 2rem;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    nav {
-      flex: none;
+
+    /* Neumorphic container */
+    .container {
+      background: #f0f0f3;
+      border-radius: 24px;
+      box-shadow:
+        8px 8px 16px #bebebe,
+        -8px -8px 16px #ffffff;
+      padding: 2.5rem 3rem;
+      max-width: 960px;
       width: 100%;
-      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Heading with inset deep shadow */
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #444;
+      margin-bottom: 1.5rem;
+      user-select: none;
+      text-align: center;
+      /* inset deep shadow for pressed effect */
+      text-shadow:
+        inset 2px 2px 4px #aaa,
+        inset -2px -2px 6px #fff;
+    }
+
+    /* Label with raised effect */
+    label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+      text-shadow:
+        2px 2px 4px #fff,
+        -2px -2px 4px #bebebe;
+      user-select: none;
+    }
+
+    /* Dropdown - raised neumorphic */
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-size: 1.1rem;
+      border-radius: 18px;
+      border: none;
+      background: #f0f0f3;
+      color: #333;
+      box-shadow:
+        6px 6px 8px #bebebe,
+        -6px -6px 8px #ffffff;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    select:hover, select:focus {
+      box-shadow:
+        2px 2px 6px #bbb,
+        -2px -2px 6px #fff;
+      outline: none;
+    }
+
+    /* Iframe with subtle raised effect */
+    iframe {
+      width: 100%;
+      height: 600px;
+      border-radius: 24px;
+      border: none;
+      background: #fff;
+      box-shadow:
+        8px 8px 16px #bebebe,
+        -8px -8px 16px #ffffff;
+      transition: box-shadow 0.3s ease;
+    }
+    iframe:focus {
+      box-shadow:
+        2px 2px 8px #aaa,
+        -2px -2px 8px #eee;
+      outline: none;
+    }
+    @media (max-width: 768px) {
+      iframe {
+        height: 400px;
+      }
+    }
+
+    /* Source code container - raised with monospace font */
+    #codeContainer {
+      background: #f0f0f3;
+      padding: 1rem 1.5rem;
       border-radius: 20px;
-      padding: 1rem;
+      max-height: 300px;
+      overflow: auto;
+      font-family: 'Fira Mono', monospace, monospace;
+      color: #444;
+      white-space: pre-wrap;
+      box-shadow:
+        6px 6px 12px #bebebe,
+        -6px -6px 12px #ffffff;
+      user-select: text;
+      line-height: 1.4;
+      font-size: 0.95rem;
     }
-    .animation-area {
-      height: 350px;
-      border-radius: 20px;
-      margin-bottom: 1rem;
+
+    /* Copy button - raised neumorphic */
+    button {
+      align-self: flex-start;
+      padding: 0.5rem 1.2rem;
+      border-radius: 24px;
+      border: none;
+      background: #f0f0f3;
+      color: #444;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow:
+        6px 6px 12px #bebebe,
+        -6px -6px 12px #ffffff;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      user-select: none;
+      margin-bottom: 0.8rem;
     }
-    header {
-      font-size: 2rem;
-      padding: 1rem 1rem;
+    button:hover {
+      background-color: #e3e3e6;
+      box-shadow:
+        2px 2px 6px #bbb,
+        -2px -2px 6px #fff;
+      color: #222;
     }
-  }
-</style>
+
+  </style>
 </head>
 <body>
+  <h1>MotionBits: Particle Animation Library</h1>
+  <div class="container">
+    <label for="animationSelect">Choose an animation:</label>
+    <select id="animationSelect">
+      <option value="">-- Select Animation --</option>
+      <option value="/animations/particle-1/">Shape Morpher</option>
+      <option value="/animations/particle-2/">Color Swapper</option>
+      <option value="/animations/particle-3/">Size Changer</option>
+      <option value="/animations/particle-4/">Rotation Animator</option>
+      <option value="/animations/particle-5/">Opacity Fader</option>
+      <option value="/animations/particle-6/">Position Shifter</option>
+      <option value="/animations/particle-7/">Scale Animator</option>
+      <option value="/animations/particle-8/">Skew Animator</option>
+      <option value="/animations/particle-9/">Blur Animator</option>
+      <option value="/animations/particle-10/">Drop Shadow</option>
+      <option value="/animations/particle-11/">Glow Effect</option>
+      <option value="/animations/particle-12/">Geo God</option>
+      <option value="/animations/particle-13/">Particle Lens 1</option>
+      <option value="/animations/particle-14/">Particle Lens 2</option>
+      <option value="/animations/particle-15/">Arctic Chaos</option>
+      <option value="/animations/particle-16/">Lord of the Rings</option>
+      <option value="/animations/particle-17/">Star Forge</option>
+      <option value="/animations/particle-18/">Knotty</option>
+      <option value="/animations/particle-19/">Shimmer</option>
+      <option value="/animations/particle-20/">Time Bend</option>
+    </select>
 
-<header>MotionBits Particle Library</header>
+    <iframe id="previewFrame" src="" title="Particle Animation Preview"></iframe>
 
-<main>
-  <nav>
-    <label for="animationSelect">Choose an animation</label>
-    <select id="animationSelect" aria-label="Select particle animation"></select>
-    <div class="instructions" aria-live="polite" aria-atomic="true"></div>
-  </nav>
+    <button id="copyBtn" style="display:none;">Copy Source Code</button>
+    <pre id="codeContainer" style="display:none;"></pre>
+  </div>
 
-  <section class="animation-area" aria-label="Particle animation preview">
-    <canvas id="c"></canvas>
-  </section>
-</main>
+  <script>
+    const select = document.getElementById('animationSelect');
+    const frame = document.getElementById('previewFrame');
+    const codeContainer = document.getElementById('codeContainer');
+    const copyBtn = document.getElementById('copyBtn');
 
-<script>
-(() => {
-  const canvas = document.getElementById('c');
-  const gl = canvas.getContext('webgl2');
-  const select = document.getElementById('animationSelect');
-  const instructions = document.querySelector('.instructions');
+    select.addEventListener('change', async () => {
+      const val = select.value;
+      if (!val) {
+        frame.src = '';
+        codeContainer.style.display = 'none';
+        copyBtn.style.display = 'none';
+        codeContainer.textContent = '';
+        return;
+      }
+      frame.src = val + 'index.html';
 
-  if (!gl) {
-    alert('WebGL 2 not supported in your browser.');
-    return;
-  }
+      try {
+        const res = await fetch(val + 'index.html');
+        if (!res.ok) throw new Error('Failed to load source code');
+        const text = await res.text();
 
-  // Particle animations data
-  const animations = {
-    "particle-1": {
-      name: "Shape Morpher",
-      vertexShader: `#version 300 es
-        in vec4 a_position;
-        void main() {
-          gl_Position = a_position;
-        }`,
-      fragmentShader: `#version 300 es
-        precision highp float;
-        out vec4 o;
-        uniform vec2 r;
-        uniform float t;
-        void main() {
-          vec2 uv = (gl_FragCoord.xy / r) * 2.0 - 1.0;
-          float morph = 0.5 + 0.5 * sin(t + uv.x * 10.0);
-          o = vec4(vec3(morph), 1.0);
-        }`,
-      usage: `
-Copy the entire block below into an HTML file and open it in a WebGL2-compatible browser:
+        codeContainer.textContent = text;
+        codeContainer.style.display = 'block';
+        copyBtn.style.display = 'inline-block';
+        copyBtn.textContent = 'Copy Source Code';
+      } catch (e) {
+        codeContainer.textContent = 'Error loading source code.';
+        codeContainer.style.display = 'block';
+        copyBtn.style.display = 'none';
+      }
+    });
 
-\`\`\`html
-<canvas id="c"></canvas>
-<style>
-  body, html, canvas {
-    margin: 0; padding: 0; overflow: hidden; background-color: black;
-  }
-  canvas { display: block; }
-</style>
-<script>
-  const c = document.getElementById("c");
-  const gl = c.getContext("webgl2");
-  // vertex & fragment shaders omitted for brevity, see main code above
-  // Setup and render shader...
-</script>
-\`\`\`
-      `
-    },
-    "particle-2": {
-      name: "Color Swapper",
-      vertexShader: `#version 300 es
-        in vec4 a_position;
-        void main() {
-          gl_Position = a_position;
-        }`,
-      fragmentShader: `#version 300 es
-        precision highp float;
-        out vec4 o;
-        uniform vec2 r;
-        uniform float t;
-        void main() {
-          vec2 uv = (gl_FragCoord.xy / r) * 2.0 - 1.0;
-          vec3 col = mix(vec3(1,0,0), vec3(0,0,1), abs(sin(t)));
-          o = vec4(col,1);
-        }`,
-      usage: `
-Copy this snippet for a basic color swapping animation:
-
-\`\`\`html
-<canvas id="c"></canvas>
-<style>
-  body, html, canvas {
-    margin: 0; padding: 0; overflow: hidden; background-color: black;
-  }
-  canvas { display: block; }
-</style>
-<script>
-  const c = document.getElementById("c");
-  const gl = c.getContext("webgl2");
-  // Setup & render code here...
-</script>
-\`\`\`
-      `
-    },
-    // Add all your animations here...
-    "particle-3": {
-      name: "Size Changer",
-      vertexShader: `#version 300 es
-        in vec4 a_position;
-        void main() {
-          gl_Position = a_position;
-        }`,
-      fragmentShader: `#version 300 es
-        precision highp float;
-        out vec4 o;
-        uniform vec2 r;
-        uniform float t;
-        void main() {
-          float size = 0.5 + 0.5 * sin(t);
-          vec2 uv = (gl_FragCoord.xy / r) * 2.0 - 1.0;
-          float d = length(uv);
-          float circle = smoothstep(size, size - 0.01, d);
-          o = vec4(vec3(1.0 - circle), 1.0);
-        }`,
-      usage: `Copy & paste this for a dynamic size-changing circle animation.`
-    }
-    // You can expand this object with full shader codes from your collection.
-  };
-
-  // Populate dropdown
-  Object.entries(animations).forEach(([key, anim]) => {
-    const option = document.createElement('option');
-    option.value = key;
-    option.textContent = anim.name;
-    select.appendChild(option);
-  });
-
-  let currentProgram = null;
-  let positionBuffer = null;
-  let positionAttributeLocation = null;
-  let resolutionUniformLocation = null;
-  let timeUniformLocation = null;
-
-  function createShader(type, source) {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error('Shader compile error:', gl.getShaderInfoLog(shader), source);
-      gl.deleteShader(shader);
-      return null;
-    }
-    return shader;
-  }
-
-  function createProgram(vertexShader, fragmentShader) {
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Program link error:', gl.getProgramInfoLog(program));
-      gl.deleteProgram(program);
-      return null;
-    }
-    return program;
-  }
-
-  function setupProgram(anim) {
-    if (currentProgram) {
-      gl.deleteProgram(currentProgram);
-      currentProgram = null;
-    }
-    const vertexShader = createShader(gl.VERTEX_SHADER, anim.vertexShader);
-    const fragmentShader = createShader(gl.FRAGMENT_SHADER, anim.fragmentShader);
-    if (!vertexShader || !fragmentShader) {
-      alert('Failed to compile shaders for ' + anim.name);
-      return false;
-    }
-    currentProgram = createProgram(vertexShader, fragmentShader);
-    if (!currentProgram) {
-      alert('Failed to link program for ' + anim.name);
-      return false;
-    }
-
-    positionAttributeLocation = gl.getAttribLocation(currentProgram, "a_position");
-    resolutionUniformLocation = gl.getUniformLocation(currentProgram, "r");
-    timeUniformLocation = gl.getUniformLocation(currentProgram, "t");
-
-    positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    const positions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    gl.useProgram(currentProgram);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-
-    return true;
-  }
-
-  function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
-    const width = canvas.clientWidth * dpr | 0;
-    const height = canvas.clientHeight * dpr | 0;
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
-    }
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-
-  let startTime = performance.now();
-
-  function render() {
-    resizeCanvas();
-
-    const time = (performance.now() - startTime) * 0.001;
-    gl.clearColor(0, 0, 0, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-    gl.uniform1f(timeUniformLocation, time);
-
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-    requestAnimationFrame(render);
-  }
-
-  function loadAnimation(key) {
-    const anim = animations[key];
-    if (!anim) return;
-    if (!setupProgram(anim)) return;
-
-    instructions.innerHTML = `<strong>${anim.name}</strong><br>${anim.usage.trim()}`;
-    startTime = performance.now();
-  }
-
-  // Init
-  select.addEventListener('change', e => loadAnimation(e.target.value));
-  // Set default animation
-  loadAnimation(select.value || Object.keys(animations)[0]);
-  render();
-
-})();
-</script>
-
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(codeContainer.textContent)
+        .then(() => {
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy Source Code';
+          }, 2000);
+        })
+        .catch(() => alert('Failed to copy code.'));
+    });
+  </script>
 </body>
 </html>
+
